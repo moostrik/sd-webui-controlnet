@@ -147,6 +147,7 @@ def controlnet_api(_: gr.Blocks, app: FastAPI):
         tensors = []
         images = []
         poses = []
+        face_info = []
 
         for i, input_image in enumerate(controlnet_input_images):
             img = external_code.to_base64_nparray(input_image)
@@ -187,9 +188,18 @@ def controlnet_api(_: gr.Blocks, app: FastAPI):
                 assert json_acceptor.value is not None
                 poses.append(json_acceptor.value)
 
+
+            if controlnet_module == "instant_id_face_info":
+                face_info.append(result.value)
+
         preprocessor.unload()
 
+
+
+
         res = {"info": "Success"}
+        if face_info:
+            res["face_info"] = face_info
         if poses:
             res["poses"] = poses
         if images:

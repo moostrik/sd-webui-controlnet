@@ -394,6 +394,22 @@ legacy_preprocessors = {
             "Instant-ID"
         ]
     },
+    "instant_id_face_info": {
+        "label": "instant_id_face_info",
+        "call_function": functools.partial(g_insight_face_instant_id_model.run_model_instant_id, return_keypoints=False, return_face_info=True),
+        "unload_function": None,
+        "managed_model": None,
+        "model_free": False,
+        "no_control_mode": False,
+        "resolution": None,
+        "slider_1": None,
+        "slider_2": None,
+        "slider_3": None,
+        "priority": 0,
+        "tags": [
+            "Instant-ID"
+        ]
+    },
     "ip-adapter_clip_sd15": {
         "label": "ip-adapter_clip_h",
         "call_function": functools.partial(clip, config='clip_h'),

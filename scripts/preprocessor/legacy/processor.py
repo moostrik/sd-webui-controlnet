@@ -685,6 +685,7 @@ class InsightFaceModel:
         img: np.ndarray,
         res: int = 512,
         return_keypoints: bool = False,
+        return_face_info: bool = False,
         **kwargs
     ) -> Tuple[Union[np.ndarray, torch.Tensor], bool]:
         """Run the insightface model for instant_id.
@@ -728,6 +729,11 @@ class InsightFaceModel:
         img, remove_pad = resize_image_with_pad(img, res)
         faces = self.model.get(img)
         face_info = InsightFaceModel.pick_largest_face(faces)
+
+        if return_face_info:
+            face_info: dict = {'score': str(face_info['det_score']), 'gender': str(face_info['gender']), 'age': str(face_info['age']), 'x0': str(face_info['bbox'][0]), 'y0': str(face_info['bbox'][1]), 'x1': str(face_info['bbox'][2]), 'y1': str(face_info['bbox'][3])}
+            return face_info, False
+
         if return_keypoints:
             return remove_pad(draw_kps(img, face_info['kps'])), True
         else:
